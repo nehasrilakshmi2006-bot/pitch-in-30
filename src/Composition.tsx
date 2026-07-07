@@ -121,11 +121,11 @@ const Scene: React.FC<{
             opacity: textOpacity,
             fontSize,
             fontWeight: "bold",
-            color: imageFile ? "#ffffff" : colors.text,
+            color: imageFile ? "#000000" : colors.text,
             fontFamily: "Georgia, serif",
             textAlign: "center",
             lineHeight: 1.3,
-            textShadow: imageFile ? "0 2px 12px rgba(0,0,0,0.6)" : "none",
+            textShadow: imageFile ? "0 2px 15px rgba(255,255,255,0.8), 0 0 5px rgba(255,255,255,0.5)" : "none",
           }}
         >
           {text}
