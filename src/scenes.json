@@ -1,0 +1,38 @@
+{
+  "scenes": [
+    {
+      "text": "Skystudy: Elevate Your Learning Journey",
+      "style": "title",
+      "durationInFrames": 123,
+      "audioFile": "audio/scene-0.wav",
+      "imageFile": "images/scene-0.jpg"
+    },
+    {
+      "text": "Feeling overwhelmed by notes & deadlines? Traditional study apps lack smart organization & personalized insights.",
+      "style": "statement",
+      "durationInFrames": 296,
+      "audioFile": "audio/scene-1.wav",
+      "imageFile": "images/scene-1.jpg"
+    },
+    {
+      "text": "Skystudy uses AI for smart summaries, personalized study plans, and intuitive organization. Study smarter, not harder.",
+      "style": "statement",
+      "durationInFrames": 96,
+      "audioFile": "audio/scene-2.wav",
+      "imageFile": "images/scene-2.jpg"
+    },
+    {
+      "text": "Enhance your studies. Download Skystudy now and reach new academic heights!",
+      "style": "cta",
+      "durationInFrames": 96,
+      "audioFile": "audio/scene-3.wav",
+      "imageFile": "images/scene-3.jpg"
+    }
+  ],
+  "settings": {
+    "format": "9:16",
+    "style": "app-launch",
+    "music": "upbeat",
+    "brandColor": "#ff7be5"
+  }
+}

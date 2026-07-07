@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pitch in 30 Seconds</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+  :root {
+    --color-pink: #db58c0;
+    --color-purple: #9d7bff;
+    --color-blue: #3f90cf;
+    --text-main: #ffffff;
+    --text-muted: rgba(255, 255, 255, 0.85);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+  
+  body {
+    background: linear-gradient(120deg, var(--color-pink) 0%, var(--color-purple) 50%, var(--color-blue) 100%);
+    background-size: 200% 200%;
+    color: var(--text-main);
+    overflow-x: hidden;
+    min-height: 100vh;
+    transition: background-position 0.3s ease-out;
+  }
+
+  /* Decorative Abstract Elements */
+  .deco-layer {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: -1;
+    overflow: hidden;
+  }
+
+  /* Diagonal Stripes */
+  .stripe {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.08);
+    transform: rotate(45deg);
+    transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .stripe-1 { width: 400px; height: 150vh; top: -25vh; left: -100px; }
+  .stripe-2 { width: 300px; height: 150vh; top: -20vh; right: 10%; background: rgba(255, 255, 255, 0.05); }
+
+  /* Glass Spheres */
+  .glass-sphere {
+    position: absolute;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.2) 60%, rgba(255,255,255,0.05) 100%);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05), inset -5px -5px 15px rgba(255,255,255,0.3);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .sphere-1 { width: 300px; height: 300px; top: 40%; left: 10%; }
+  .sphere-2 { width: 150px; height: 150px; top: 15%; right: 15%; }
+  .sphere-3 { width: 80px; height: 80px; top: 20%; left: 5%; }
+  .sphere-4 { width: 220px; height: 220px; bottom: -5%; right: 25%; }
+
+  /* Wavy Lines (using SVG as background) */
+  .wavy-lines {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-image: url("data:image/svg+xml,%3Csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 300 Q 250 100 500 300 T 1000 300 T 1500 300' fill='none' stroke='rgba(255,255,255,0.15)' stroke-width='1'/%3E%3Cpath d='M0 320 Q 250 120 500 320 T 1000 320 T 1500 320' fill='none' stroke='rgba(255,255,255,0.15)' stroke-width='1'/%3E%3Cpath d='M0 340 Q 250 140 500 340 T 1000 340 T 1500 340' fill='none' stroke='rgba(255,255,255,0.15)' stroke-width='1'/%3E%3Cpath d='M0 360 Q 250 160 500 360 T 1000 360 T 1500 360' fill='none' stroke='rgba(255,255,255,0.15)' stroke-width='1'/%3E%3Cpath d='M0 450 Q 300 650 600 450 T 1200 450 T 1800 450' fill='none' stroke='rgba(255,255,255,0.15)' stroke-width='1'/%3E%3Cpath d='M0 470 Q 300 670 600 470 T 1200 470 T 1800 470' fill='none' stroke='rgba(255,255,255,0.15)' stroke-width='1'/%3E%3Cpath d='M0 490 Q 300 690 600 490 T 1200 490 T 1800 490' fill='none' stroke='rgba(255,255,255,0.15)' stroke-width='1'/%3E%3C/svg%3E");
+    background-size: cover;
+    background-position: center;
+    opacity: 0.7;
+    transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  /* Navbar */
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px 5%;
+    position: relative;
+    z-index: 10;
+  }
+  .logo { font-weight: 700; font-size: 1.5rem; letter-spacing: -0.5px; }
+  .nav-links { display: flex; gap: 30px; align-items: center; }
+  .nav-links a { color: var(--text-main); text-decoration: none; font-size: 0.95rem; font-weight: 400; transition: opacity 0.3s; }
+  .nav-links a:hover { opacity: 0.7; }
+  .search-bar { background: rgba(255,255,255,0.2); border-radius: 20px; padding: 6px 15px; display: flex; align-items: center; gap: 8px; font-size: 0.85rem; }
+  .search-bar i { width: 14px; height: 14px; }
+  .btn-join { background: #fff; color: var(--color-blue); padding: 6px 20px; border-radius: 20px; font-weight: 600; font-size: 0.85rem; text-decoration: none; }
+  .profile-icon { margin-left: 10px; }
+
+  /* Main Area */
+  .main-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 80px 20px 40px;
+    position: relative;
+    z-index: 5;
+    min-height: 80vh;
+  }
+
+  h1 {
+    font-size: clamp(3rem, 6vw, 4.5rem);
+    font-weight: 400;
+    line-height: 1.1;
+    margin-bottom: 20px;
+    text-shadow: 0 4px 20px rgba(0,0,0,0.05);
+  }
+  h1 span { font-weight: 700; display: block; }
+
+  .description { font-size: 1.15rem; color: #ffffff; font-weight: 500; max-width: 600px; margin: 0 auto; line-height: 1.6; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
+
+  /* Interactive Elements */
+  .interaction-area {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  textarea {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 20px;
+    padding: 20px;
+    color: #fff;
+    font-size: 1.05rem;
+    resize: none;
+    margin-bottom: 20px;
+    transition: all 0.3s;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.05);
+  }
+  textarea:focus {
+    outline: none;
+    background: rgba(255, 255, 255, 0.25);
+    border-color: rgba(255, 255, 255, 0.6);
+  }
+  textarea::placeholder { color: rgba(255, 255, 255, 0.6); font-weight: 300; }
+
+  button#generateBtn {
+    background: #fff;
+    color: var(--color-purple);
+    border: none;
+    padding: 16px 40px;
+    border-radius: 30px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+  button#generateBtn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.15);
+  }
+  button#generateBtn:active { transform: translateY(1px); }
+  button#generateBtn:disabled { opacity: 0.8; cursor: not-allowed; background: rgba(255,255,255,0.5); }
+
+  #status { margin-top: 15px; font-size: 0.95rem; font-weight: 500; }
+
+  #progressContainer { width: 100%; margin-top: 20px; display: none; }
+  #progressBarOuter { width: 100%; height: 8px; background: rgba(255,255,255,0.2); border-radius: 10px; overflow: hidden; }
+  #progressBarInner { height: 100%; width: 0%; background: #fff; border-radius: 10px; transition: width 0.3s; }
+
+  video { 
+    margin-top: 30px; width: 100%; border-radius: 20px; display: none; 
+    box-shadow: 0 20px 40px rgba(0,0,0,0.15); border: 2px solid rgba(255,255,255,0.4);
+    background: rgba(0,0,0,0.1);
+  }
+
+  #actionButtons { display: none; gap: 15px; margin-top: 20px; justify-content: center; }
+  .sec-btn {
+    padding: 12px 25px; border-radius: 25px; text-decoration: none; font-size: 0.95rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px;
+  }
+  #downloadBtn { background: #fff; color: var(--color-blue); box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+  #downloadBtn:hover { transform: translateY(-2px); }
+  #copyLinkBtn { background: rgba(255,255,255,0.2); color: #fff; border: 1px solid rgba(255,255,255,0.4); }
+  #copyLinkBtn:hover { background: rgba(255,255,255,0.3); }
+
+  /* Sections */
+  .extra-section {
+    max-width: 1000px; margin: 60px auto; padding: 40px 20px;
+    background: rgba(255,255,255,0.25);
+    border-radius: 30px;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.5);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.1), inset 0 0 20px rgba(255,255,255,0.2);
+  }
+  .section-title { font-size: 2rem; font-weight: 300; margin-bottom: 30px; text-align: center; }
+  .section-title span { font-weight: 700; }
+
+  .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+  .card-light {
+    background: rgba(255,255,255,0.35); border: 1px solid rgba(255,255,255,0.5);
+    padding: 25px; border-radius: 20px; transition: transform 0.3s, background 0.3s, box-shadow 0.3s;
+    backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.05);
+  }
+  .card-light:hover { transform: translateY(-5px); background: rgba(255,255,255,0.45); box-shadow: 0 15px 35px rgba(0,0,0,0.1); }
+  .card-light h3 { font-size: 1.25rem; margin-bottom: 12px; font-weight: 800; color: #ffffff; text-shadow: 0 2px 5px rgba(0,0,0,0.3); }
+  .card-light p { font-size: 1rem; color: #ffffff; font-weight: 500; line-height: 1.5; text-shadow: 0 2px 5px rgba(0,0,0,0.3); opacity: 1; }
+
+  /* Quiz specific */
+  .quiz-card {
+    background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 20px; padding: 30px; backdrop-filter: blur(20px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  }
+  .quiz-progress { font-size: 0.9rem; color: rgba(255,255,255,0.7); margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
+  .quizOpt {
+    width: 100%; background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.2); color: #fff;
+    padding: 15px 20px; border-radius: 12px; margin-bottom: 12px; text-align: left; cursor: pointer; transition: all 0.2s; font-size: 1.05rem; font-weight: 500;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .quizOpt:hover { background: rgba(255,255,255,0.2); border-color: rgba(255,255,255,0.5); transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+  #quizResult { margin-top: 20px; font-size: 1.5rem; font-weight: 700; text-align: center; background: linear-gradient(135deg, #fff, rgba(255,255,255,0.8)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+  /* New Config UI */
+  .config-panel {
+    background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 20px; padding: 20px; margin-bottom: 20px; text-align: left;
+    backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+    display: flex; flex-direction: column; gap: 15px;
+  }
+  .config-row { display: flex; gap: 15px; flex-wrap: wrap; }
+  .config-group { flex: 1; min-width: 150px; }
+  .config-label { font-size: 0.85rem; font-weight: 600; margin-bottom: 8px; color: rgba(255,255,255,0.8); display: block; }
+  .config-select { 
+    width: 100%; padding: 10px 15px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.3);
+    background: rgba(0,0,0,0.2); color: #fff; font-size: 0.95rem; cursor: pointer;
+    appearance: none; -webkit-appearance: none;
+  }
+  .config-input[type="color"] {
+    width: 100%; height: 42px; padding: 0; border-radius: 10px; border: 1px solid rgba(255,255,255,0.3);
+    background: rgba(0,0,0,0.2); cursor: pointer; overflow: hidden;
+  }
+  .config-input[type="color"]::-webkit-color-swatch-wrapper { padding: 2px; }
+  .config-input[type="color"]::-webkit-color-swatch { border: none; border-radius: 8px; }
+  .config-select option { color: #000; }
+  
+  /* Segmented Control for Aspect Ratio */
+  .segmented-control { display: flex; background: rgba(0,0,0,0.2); border-radius: 10px; overflow: hidden; border: 1px solid rgba(255,255,255,0.3); }
+  .seg-btn { flex: 1; padding: 10px; border: none; background: transparent; color: rgba(255,255,255,0.6); cursor: pointer; font-weight: 600; transition: 0.3s; }
+  .seg-btn.active { background: rgba(255,255,255,0.2); color: #fff; }
+
+  /* Style Presets */
+  .style-presets { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 5px; }
+  .preset-card { 
+    min-width: 100px; padding: 15px 10px; text-align: center; border-radius: 12px; cursor: pointer;
+    background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); transition: 0.3s;
+  }
+  .preset-card.active { background: rgba(255,255,255,0.3); border-color: #fff; transform: translateY(-3px); }
+  .preset-card i { margin-bottom: 5px; }
+
+  /* Storyboard UI */
+  #storyboardContainer { display: none; text-align: left; background: rgba(0,0,0,0.2); padding: 20px; border-radius: 20px; margin-bottom: 20px; }
+  .story-scene { background: rgba(255,255,255,0.1); padding: 15px; border-radius: 12px; margin-bottom: 10px; border: 1px solid rgba(255,255,255,0.2); }
+  .story-scene input { width: 100%; background: transparent; border: none; color: #fff; font-size: 1rem; margin-top: 5px; border-bottom: 1px solid rgba(255,255,255,0.3); padding-bottom: 5px; }
+  .story-scene input:focus { outline: none; border-bottom-color: #fff; }
+  .scene-badge { font-size: 0.75rem; background: var(--color-purple); padding: 3px 8px; border-radius: 10px; text-transform: uppercase; font-weight: 700; }
+
+  footer { text-align: center; padding: 30px; color: var(--text-muted); font-size: 0.9rem; }
+
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    h1 { font-size: 2.2rem; }
+    .subtitle { font-size: 1.1rem; }
+    .stripe-1, .stripe-2 { opacity: 0.5; }
+    .container { margin-top: 60px; padding: 30px 20px; }
+    .config-row { flex-direction: column; gap: 10px; }
+    .config-group { width: 100%; }
+    .style-presets { padding-bottom: 10px; }
+    button#generateBtn, button#renderBtn { width: 100%; justify-content: center; }
+    #actionButtons { flex-direction: column; width: 100%; }
+    .sec-btn { width: 100%; justify-content: center; }
+    .extra-section { margin: 40px 15px; padding: 30px 20px; }
+    .section-title { font-size: 1.6rem; }
+    .grid-container { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- Background Decorative Elements for Hover Parallax -->
+  <div class="deco-layer" id="decoLayer">
+    <div class="wavy-lines" id="wavyLines"></div>
+    <div class="stripe stripe-1" id="stripe1"></div>
+    <div class="stripe stripe-2" id="stripe2"></div>
+    <div class="glass-sphere sphere-1" id="sphere1"></div>
+    <div class="glass-sphere sphere-2" id="sphere2"></div>
+    <div class="glass-sphere sphere-3" id="sphere3"></div>
+    <div class="glass-sphere sphere-4" id="sphere4"></div>
+  </div>
+
+  <nav>
+    <div class="logo">Pitch in 30</div>
+    <div class="nav-links">
+      <a href="#home">Create Video</a>
+      <a href="#tips">Marketing Tips</a>
+      <a href="#quiz">Marketing Quiz</a>
+    </div>
+  </nav>
+
+  <div class="main-wrapper" id="home">
+    <h1>Pitch in <br><span>30 Seconds</span></h1>
+    <p class="description">
+      Type an idea. Watch it become your marketing video. A revolutionary AI-powered tool for owners to craft compelling pitch videos in seconds.
+    </p>
+    
+    <div class="interaction-area">
+      <textarea id="idea" rows="3" placeholder="Describe your startup idea (e.g. An AI app that helps students study faster...)"></textarea>
+      
+      <div class="config-panel" id="configPanel">
+        <div class="config-row">
+          <div class="config-group">
+            <span class="config-label">Format</span>
+            <div class="segmented-control">
+              <button class="seg-btn active" data-val="9:16">9:16</button>
+              <button class="seg-btn" data-val="1:1">1:1</button>
+              <button class="seg-btn" data-val="16:9">16:9</button>
+            </div>
+          </div>
+          <div class="config-group">
+            <span class="config-label">Music</span>
+            <select class="config-select" id="musicSelect">
+              <option value="upbeat">Upbeat Pop</option>
+              <option value="none">No Music</option>
+            </select>
+          </div>
+          <div class="config-group">
+            <span class="config-label">Brand Color</span>
+            <input type="color" class="config-input" id="brandColor" value="#ff7be5" style="padding:2px; height:40px;">
+          </div>
+        </div>
+
+        <div class="config-group">
+          <span class="config-label">Vibe & Style</span>
+          <div class="style-presets">
+            <div class="preset-card active" data-style="app-launch"><i data-lucide="smartphone"></i><br>App Launch</div>
+            <div class="preset-card" data-style="retail-promo"><i data-lucide="shopping-bag"></i><br>Retail Promo</div>
+            <div class="preset-card" data-style="flash-sale"><i data-lucide="zap"></i><br>Flash Sale</div>
+            <div class="preset-card" data-style="minimalist"><i data-lucide="layout-template"></i><br>Minimalist</div>
+          </div>
+        </div>
+
+
+      </div>
+
+      <div id="storyboardContainer">
+        <h3 style="margin-bottom: 15px; font-weight: 600;">Edit your script</h3>
+        <div id="storyboardScenes"></div>
+        <button id="renderBtn" style="margin-top:15px; width:100%; background:var(--color-blue); color:#fff; border:none; padding:15px; border-radius:20px; font-weight:600; font-size:1.1rem; cursor:pointer;">RENDER FINAL VIDEO</button>
+      </div>
+
+      <button id="generateBtn">GENERATE STORYBOARD</button>
+      <div id="status"></div>
+      
+      <div id="progressContainer">
+        <div id="progressBarOuter"><div id="progressBarInner"></div></div>
+      </div>
+      
+      <video id="video" controls playsinline></video>
+      
+      <div id="actionButtons">
+        <button id="publishBtn" class="sec-btn" style="background: #e1306c; color: white; border: none;">
+          <i data-lucide="instagram" style="width:16px;"></i> Publish
+        </button>
+        <a id="downloadBtn" class="sec-btn" download="pitch-video.mp4">
+          <i data-lucide="download" style="width:16px;"></i> Download
+        </a>
+        <button id="copyLinkBtn" class="sec-btn">
+          <i data-lucide="link" style="width:16px;"></i> Copy Link
+        </button>
+      </div>
+    </div>
+    
+    <div style="margin-top: 50px; opacity: 0.7;">
+      <i data-lucide="mouse" style="width:30px; height:30px;"></i>
+    </div>
+  </div>
+
+  <div class="extra-section" id="tips">
+    <h2 class="section-title">Marketing <span>Playbook</span></h2>
+    <div class="grid-container">
+      <div class="card-light">
+        <h3>Lead with the problem</h3>
+        <p>People remember pain points faster than features. Open your pitch with the frustration, not the solution.</p>
+      </div>
+      <div class="card-light">
+        <h3>One clear CTA</h3>
+        <p>"Sign up today" outperforms "check us out, follow us, and share this" every single time.</p>
+      </div>
+      <div class="card-light">
+        <h3>Numbers build trust</h3>
+        <p>"Saves 3 hours a week" beats "saves you tons of time". Always use specific metrics when possible.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="extra-section" id="quiz">
+    <h2 class="section-title">Test Your <span>Knowledge</span></h2>
+    <div style="max-width: 600px; margin: 0 auto;" class="quiz-card">
+      <div id="quizContainer"></div>
+      <div id="quizResult"></div>
+    </div>
+  </div>
+
+  <div class="extra-section" id="future">
+    <h2 class="section-title">Future <span>Scopes</span></h2>
+    <div class="grid-container">
+      <div class="card-light">
+        <h3><i data-lucide="video" style="vertical-align:middle;margin-right:8px;"></i> B-Roll Generation</h3>
+        <p>Automatically generating hyper-relevant AI video backgrounds instead of just static scenes.</p>
+      </div>
+      <div class="card-light">
+        <h3><i data-lucide="music" style="vertical-align:middle;margin-right:8px;"></i> AI Music Gen</h3>
+        <p>Creating custom, royalty-free background tracks synced perfectly to the script's mood.</p>
+      </div>
+      <div class="card-light">
+        <h3><i data-lucide="globe" style="vertical-align:middle;margin-right:8px;"></i> Multi-Language</h3>
+        <p>Instantly translating the generated script and voiceover into 30+ languages for global reach.</p>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    &copy; 2026 Pitch in 30. Designed for the Future.
+  </footer>
+
+  <script>
+    lucide.createIcons();
+
+    // Hover/Mouse Parallax Effect
+    document.addEventListener('mousemove', (e) => {
+      const x = (e.clientX / window.innerWidth) - 0.5;
+      const y = (e.clientY / window.innerHeight) - 0.5;
+      
+      // Shift background gradient slightly
+      document.body.style.backgroundPosition = `${50 + (x * 20)}% ${50 + (y * 20)}%`;
+      
+      // Move decorative elements
+      const s1 = document.getElementById('sphere1');
+      const s2 = document.getElementById('sphere2');
+      const s3 = document.getElementById('sphere3');
+      const s4 = document.getElementById('sphere4');
+      const st1 = document.getElementById('stripe1');
+      const st2 = document.getElementById('stripe2');
+      const wl = document.getElementById('wavyLines');
+
+      s1.style.transform = `translate(${x * -80}px, ${y * -80}px)`;
+      s2.style.transform = `translate(${x * 60}px, ${y * 60}px)`;
+      s3.style.transform = `translate(${x * -40}px, ${y * 40}px)`;
+      s4.style.transform = `translate(${x * 100}px, ${y * -100}px)`;
+      
+      st1.style.transform = `rotate(45deg) translate(${x * -50}px, ${y * -50}px)`;
+      st2.style.transform = `rotate(45deg) translate(${x * 40}px, ${y * 40}px)`;
+      
+      wl.style.transform = `translate(${x * -30}px, ${y * -30}px)`;
+    });
+
+    // Generator Logic
+    const btn = document.getElementById('generateBtn');
+    const renderBtn = document.getElementById('renderBtn');
+    const status = document.getElementById('status');
+    const video = document.getElementById('video');
+    const ideaInput = document.getElementById('idea');
+    const progressContainer = document.getElementById('progressContainer');
+    const progressBarInner = document.getElementById('progressBarInner');
+    const actionButtons = document.getElementById('actionButtons');
+    const downloadBtn = document.getElementById('downloadBtn');
+    const copyLinkBtn = document.getElementById('copyLinkBtn');
+    
+    // New UI elements
+    const configPanel = document.getElementById('configPanel');
+    const storyboardContainer = document.getElementById('storyboardContainer');
+    const storyboardScenes = document.getElementById('storyboardScenes');
+    let currentScript = null;
+
+    // Segmented Control Logic
+    let selectedFormat = '9:16';
+    document.querySelectorAll('.seg-btn').forEach(b => {
+      b.onclick = () => {
+        document.querySelectorAll('.seg-btn').forEach(btn => btn.classList.remove('active'));
+        b.classList.add('active');
+        selectedFormat = b.dataset.val;
+      }
+    });
+
+    // Style Presets Logic
+    let selectedStyle = 'app-launch';
+    document.querySelectorAll('.preset-card').forEach(c => {
+      c.onclick = () => {
+        document.querySelectorAll('.preset-card').forEach(card => card.classList.remove('active'));
+        c.classList.add('active');
+        selectedStyle = c.dataset.style;
+      }
+    });
+
+    let pollInterval;
+    async function pollStatus() {
+      try {
+        const res = await fetch('http://localhost:3050/status');
+        const data = await res.json();
+        status.innerHTML = `<i data-lucide="loader-2" class="spin" style="width:14px;height:14px;vertical-align:middle;margin-right:5px;"></i> ${data.step}`;
+        lucide.createIcons();
+        progressBarInner.style.width = data.percent + '%';
+      } catch (err) {}
+    }
+
+    const style = document.createElement('style');
+    style.innerHTML = `.spin { animation: spin 1s linear infinite; } @keyframes spin { 100% { transform: rotate(360deg); } }`;
+    document.head.appendChild(style);
+
+    // STEP 1: Generate Storyboard
+    btn.addEventListener('click', async () => {
+      const idea = ideaInput.value.trim();
+      if (!idea) {
+        status.textContent = 'Please type an idea first.';
+        return;
+      }
+
+      btn.disabled = true;
+      btn.innerHTML = `<i data-lucide="loader-2" class="spin"></i> GENERATING STORYBOARD...`;
+      lucide.createIcons();
+      video.style.display = 'none';
+      actionButtons.style.display = 'none';
+      status.innerHTML = `Writing script...`;
+
+      try {
+        const res = await fetch('http://localhost:3050/generate-script', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ idea }),
+        });
+        const data = await res.json();
+
+        if (data.status === 'success') {
+          currentScript = data.script;
+          status.innerHTML = '';
+          configPanel.style.display = 'none';
+          ideaInput.style.display = 'none';
+          btn.style.display = 'none';
+          storyboardContainer.style.display = 'block';
+          
+          storyboardScenes.innerHTML = currentScript.scenes.map((scene, i) => `
+            <div class="story-scene">
+              <span class="scene-badge">Scene ${i+1} - ${scene.style}</span>
+              <input type="text" id="sceneInput${i}" value="${scene.text}">
+            </div>
+          `).join('');
+        } else {
+          status.innerHTML = `Error: ${data.error}`;
+        }
+      } catch (err) {
+        status.innerHTML = `Error: ${err.message}`;
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = `GENERATE STORYBOARD`;
+        lucide.createIcons();
+      }
+    });
+
+    // STEP 2: Render Final Video
+    renderBtn.addEventListener('click', async () => {
+      // Collect edited script
+      currentScript.scenes.forEach((scene, i) => {
+        scene.text = document.getElementById(`sceneInput${i}`).value;
+      });
+
+      // Collect settings
+      const settings = {
+        format: selectedFormat,
+        style: selectedStyle,
+        music: document.getElementById('musicSelect').value,
+        brandColor: document.getElementById('brandColor').value
+      };
+
+      renderBtn.disabled = true;
+      renderBtn.innerHTML = `<i data-lucide="loader-2" class="spin"></i> RENDERING...`;
+      lucide.createIcons();
+      progressContainer.style.display = 'block';
+      progressBarInner.style.width = '0%';
+      status.innerHTML = `<i data-lucide="loader-2" class="spin" style="width:14px;height:14px;vertical-align:middle;margin-right:5px;"></i> Starting render...`;
+      lucide.createIcons();
+
+      pollInterval = setInterval(pollStatus, 1500);
+
+      try {
+        const res = await fetch('http://localhost:3050/render-video', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ script: currentScript, ...settings }),
+        });
+        const data = await res.json();
+
+        clearInterval(pollInterval);
+
+        if (data.status === 'success') {
+          progressBarInner.style.width = '100%';
+          status.innerHTML = `<i data-lucide="loader-2" class="spin" style="width:14px;height:14px;vertical-align:middle;margin-right:5px;"></i> Uploading to cloud...`;
+          lucide.createIcons();
+          
+          const fullVideoUrl = 'http://localhost:3050' + data.videoUrl;
+          video.src = fullVideoUrl;
+          video.style.display = 'block';
+          video.play();
+
+          // Implement real downloading using blob
+          downloadBtn.href = "#";
+          downloadBtn.onclick = async (e) => {
+            e.preventDefault();
+            const originalHtml = downloadBtn.innerHTML;
+            downloadBtn.innerHTML = `<i data-lucide="loader-2" class="spin" style="width:16px;vertical-align:middle;"></i> Downloading...`;
+            lucide.createIcons();
+            try {
+              const response = await fetch(fullVideoUrl);
+              const blob = await response.blob();
+              const blobUrl = URL.createObjectURL(blob);
+              const a = document.createElement('a');
+              a.href = blobUrl;
+              a.download = 'pitch-video.mp4';
+              document.body.appendChild(a);
+              a.click();
+              document.body.removeChild(a);
+              URL.revokeObjectURL(blobUrl);
+            } catch (err) {
+              console.error("Download failed", err);
+              alert("Download failed.");
+            }
+            downloadBtn.innerHTML = originalHtml;
+            lucide.createIcons();
+          };
+
+          actionButtons.style.display = 'flex';
+          storyboardContainer.style.display = 'none';
+
+          let publicShareableUrl = fullVideoUrl; // Fallback
+
+          try {
+            // Fetch video as blob to upload
+            const videoBlobResponse = await fetch(fullVideoUrl);
+            const videoBlob = await videoBlobResponse.blob();
+            
+            // Cloudinary unsigned upload configuration
+            // Note: Replace these with your actual Cloudinary Cloud Name & Upload Preset
+            const CLOUDINARY_CLOUD_NAME = 'dloay4uzn'; 
+            const CLOUDINARY_UPLOAD_PRESET = 'pitch_in_30_upload'; 
+            
+            
+            const formData = new FormData();
+            formData.append('file', videoBlob);
+            formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+            
+            const uploadRes = await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/video/upload`, {
+              method: 'POST',
+              body: formData
+            });
+            
+            const uploadData = await uploadRes.json();
+            if (uploadData.secure_url) {
+              publicShareableUrl = uploadData.secure_url;
+              status.innerHTML = `Ready! Public link generated.`;
+            } else {
+              status.innerHTML = `Ready! (Cloud upload failed, using local link)`;
+            }
+          } catch (uploadErr) {
+            console.error("Cloud upload failed:", uploadErr);
+            status.innerHTML = `Ready! (Cloud upload failed, using local link)`;
+          }
+
+          // Trigger Zapier Webhook on Publish Click
+          const publishBtn = document.getElementById('publishBtn');
+          publishBtn.onclick = async () => {
+            const originalContent = publishBtn.innerHTML;
+            publishBtn.innerHTML = `<i data-lucide="loader-2" class="spin" style="width:16px;"></i> Publishing...`;
+            lucide.createIcons();
+            
+            const ZAPIER_WEBHOOK_URL = 'https://hooks.zapier.com/hooks/catch/28174034/4umuvbn/';
+            const captionText = `${ideaInput.value.trim()} #PitchIn30 #AI`;
+
+            try {
+              const webhookResponse = await fetch(ZAPIER_WEBHOOK_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  videoUrl: publicShareableUrl,
+                  caption: captionText
+                })
+              });
+
+              if (webhookResponse.ok) {
+                publishBtn.innerHTML = `<i data-lucide="check" style="width:16px;"></i> Published!`;
+                lucide.createIcons();
+                setTimeout(() => {
+                  publishBtn.innerHTML = originalContent;
+                  lucide.createIcons();
+                }, 3000);
+              } else {
+                publishBtn.innerHTML = `Error!`;
+                setTimeout(() => { publishBtn.innerHTML = originalContent; lucide.createIcons(); }, 3000);
+              }
+            } catch (error) {
+              console.error("Error sending data to Zapier webhook:", error);
+              publishBtn.innerHTML = `Error!`;
+              setTimeout(() => { publishBtn.innerHTML = originalContent; lucide.createIcons(); }, 3000);
+            }
+          };
+
+          copyLinkBtn.onclick = () => {
+            navigator.clipboard.writeText(publicShareableUrl);
+            const originalContent = copyLinkBtn.innerHTML;
+            copyLinkBtn.innerHTML = `<i data-lucide="check" style="width:16px;"></i> Copied!`;
+            lucide.createIcons();
+            setTimeout(() => { 
+              copyLinkBtn.innerHTML = originalContent;
+              lucide.createIcons();
+            }, 2000);
+          };
+
+        } else {
+          status.innerHTML = `Error: ${data.error}`;
+        }
+      } catch (err) {
+        clearInterval(pollInterval);
+        status.innerHTML = `Error: ${err.message}`;
+      } finally {
+        renderBtn.disabled = false;
+        renderBtn.innerHTML = `RENDER FINAL VIDEO`;
+        lucide.createIcons();
+      }
+    });
+
+    // Quiz Logic
+    const quizQuestions = [
+      { q: "What should you lead a pitch with?", options: ["The problem", "Your team bios", "Pricing"], answer: 0 },
+      { q: "Which converts better?", options: ["5 different CTAs", "1 clear CTA", "No CTA"], answer: 1 },
+      { q: "What builds trust fastest?", options: ["Adjectives", "Specific numbers", "Long paragraphs"], answer: 1 },
+      { q: "How long do you have to hook a viewer?", options: ["30 seconds", "10 seconds", "3 seconds"], answer: 2 },
+    ];
+
+    let quizScore = 0;
+    let currentQ = 0;
+    const quizContainer = document.getElementById('quizContainer');
+    const quizResult = document.getElementById('quizResult');
+
+    function renderQuiz() {
+      if (currentQ >= quizQuestions.length) {
+        quizContainer.innerHTML = '';
+        quizResult.innerHTML = `Awesome! You scored ${quizScore}/${quizQuestions.length}! 🎉`;
+        return;
+      }
+      const q = quizQuestions[currentQ];
+      
+      const newHtml = `
+        <div class="quiz-progress">Question ${currentQ + 1} of ${quizQuestions.length}</div>
+        <h3 style="font-size:1.4rem;font-weight:700;margin-bottom:25px;line-height:1.4;">${q.q}</h3>
+        <div style="display:flex; flex-direction:column; gap:10px;">
+          ${q.options.map((opt, i) => `
+            <button class="quizOpt" data-i="${i}">${opt}</button>
+          `).join('')}
+        </div>
+      `;
+      
+      quizContainer.innerHTML = newHtml;
+      attachQuizListeners();
+    }
+
+    function attachQuizListeners() {
+      document.querySelectorAll('.quizOpt').forEach(qbtn => {
+        qbtn.onclick = (e) => {
+          const isCorrect = parseInt(qbtn.dataset.i) === quizQuestions[currentQ].answer;
+          if (isCorrect) quizScore++;
+          
+          document.querySelectorAll('.quizOpt').forEach(b => b.style.pointerEvents = 'none');
+          qbtn.style.background = isCorrect ? '#4ade80' : '#f87171';
+          qbtn.style.color = '#fff';
+          qbtn.style.borderColor = 'transparent';
+          qbtn.innerHTML += isCorrect ? ' <i data-lucide="check-circle-2"></i>' : ' <i data-lucide="x-circle"></i>';
+          lucide.createIcons();
+          
+          setTimeout(() => {
+            currentQ++;
+            renderQuiz();
+          }, 600);
+        };
+      });
+    }
+    
+    renderQuiz();
+  </script>
+</body>
+</html>
